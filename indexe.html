@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🎁 Тайная комната</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
 </head>
 <body>
 
@@ -17,86 +16,106 @@
     <button class="btn" data-next="s2">Открыть дверь →</button>
   </section>
 
-  <!-- Экран 2: Задача с редактором -->
+  <!-- Экран 2: Задача -->
   <section class="screen" id="s2">
     <h1>🐍 Задача стража</h1>
 
     <div class="task-card">
-      <h2>Условие</h2>
-      <p>
-        Напиши функцию <code>happy_birthday(name)</code>, которая возвращает строку:
-      </p>
-      <pre class="expected">🎂 С днём рождения, &lt;имя&gt;! 🎉</pre>
-      <p>
-        Затем вызови её с именем <b>"Аня"</b> и выведи результат через <code>print()</code>.
-      </p>
+  <h2>Условие</h2>
+  <p>Кристина празднует <b>160-летие</b> 🎂. На торте стоят свечи — каждая свеча это цифра её возраста, записанная <b>в двоичном виде</b> (без ведущих нулей).</p>
+
+  <p>Правило: если в двоичной записи возраста <b>нулей больше, чем единиц</b> — желание сбудется. Иначе — нет.</p>
+
+  <h3>Что должна сделать программа:</h3>
+  <ol>
+    <li>Взять возраст <code>160</code></li>
+    <li>Перевести его в двоичную систему</li>
+    <li>Посчитать количество <code>1</code> и <code>0</code></li>
+    <li>Вывести <b>одну строку</b>:
+      <pre class="code-block">Желание сбудется!</pre>
+      или
+      <pre class="code-block">Желание не сбудется</pre>
+    </li>
+  </ol>
+
+  <p>Напиши код, запусти его у себя и введи <b>то, что вывела программа</b> — в поле ниже.</p>
+
+  <div class="note">
+    💡 <b>Примечание:</b> код пиши в <b>VS Code</b>, <b>PyCharm</b>, <b>IDLE</b> или любом удобном редакторе.
+    Здесь ничего запускать не нужно — только введи результат.
+  </div>
+</div>
+
+    <div class="answer-wrap">
+      <input id="answer" type="text" placeholder="Введи вывод своей программы..." autocomplete="off" spellcheck="false">
+      <button class="btn" id="checkBtn">✅ Проверить</button>
     </div>
 
-    <div class="editor-wrap">
-      <div class="editor-header">
-        <span class="dot red"></span>
-        <span class="dot yellow"></span>
-        <span class="dot green"></span>
-        <span class="filename">solution.py</span>
-      </div>
-      <textarea id="code" spellcheck="false">def happy_birthday(name):
-    # твой код здесь
-    pass
-
-print(happy_birthday("Аня"))
-</textarea>
-    </div>
-
-    <div class="controls">
-      <button class="btn" id="runBtn" disabled>▶ Запустить</button>
-      <button class="btn secondary" id="checkBtn" disabled>✅ Проверить</button>
-    </div>
-
-    <div class="output-wrap">
-      <div class="output-label">Вывод:</div>
-      <pre id="output" class="output"></pre>
-      <p id="hint" class="hint"></p>
-    </div>
-
-    <p id="loading" class="loading">Загружаю Python... ⏳</p>
+    <p id="hint" class="hint"></p>
   </section>
 
-  <!-- Экран 3: Поздравление -->
+  <!-- Экран 3: Опрос -->
   <section class="screen" id="s3">
-    <h1 class="typing">🎉 С Днём Рождения! 🎉</h1>
-    <p class="wish">
-      Пусть каждый день будет как хороший код —<br>
-      чистый, работающий и без багов!<br><br>
-      Желаю море вдохновения, крутых проектов<br>
-      и чтобы всё всегда компилировалось с первого раза 💚
-    </p>
-    <button class="btn" data-next="s4">Дальше →</button>
-  </section>
+    <h1>😂 Тест на личность именинника</h1>
 
-  <!-- Экран 4: Опрос -->
-  <section class="screen" id="s4">
-    <h1>А какой ты именинник?</h1>
-    <div class="options">
-      <button class="option" data-vote="🦥">🦥 Ленивый — отпраздную лёжа</button>
-      <button class="option" data-vote="🚀">🚀 Энергичный — вечеринка до утра</button>
-      <button class="option" data-vote="🧠">🧠 Мудрый — главное спокойствие</button>
-      <button class="option" data-vote="🍕">🍕 Голодный — где торт?</button>
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar" id="quizBar"></div>
     </div>
-    <p id="voteResult" class="vote-result"></p>
+    <p class="quiz-counter" id="quizCounter">Вопрос 1 из 5</p>
+
+    <div class="quiz-card">
+      <p class="quiz-question" id="quizQuestion">Загрузка...</p>
+      <div class="quiz-options" id="quizOptions"></div>
+    </div>
   </section>
 
-  <!-- Экран 5: Подарок -->
-  <section class="screen" id="s5">
+  <!-- Экран 4: Лабиринт -->
+  <section class="screen" id="s4">
+    <h1>🗺️ Помоги девочке найти подарок</h1>
+    <p class="game-hint">Управление: <b>←↑↓→</b> или <b>W A S D</b></p>
+
+    <div class="maze-wrap">
+      <div class="maze" id="maze"></div>
+    </div>
+
+    <div class="dpad">
+      <button class="dpad-btn" data-dir="up">▲</button>
+      <div class="dpad-row">
+        <button class="dpad-btn" data-dir="left">◀</button>
+        <button class="dpad-btn" data-dir="down">▼</button>
+        <button class="dpad-btn" data-dir="right">▶</button>
+      </div>
+    </div>
+
+    <p id="gameMsg" class="game-msg"></p>
+  </section>
+
+  <!-- Экран 5: Поздравление -->
+    <section class="screen" id="s5">
+      <div class="congrats-bg"></div>
+      <div class="congrats-content">
+        <h1>🎉 С Днём Рождения! 🎉</h1>
+        <p class="wish">
+          Пусть каждый день будет как хороший код —<br>
+          чистый, работающий и без багов!<br><br>
+          Желаю море вдохновения, крутых проектов<br>
+          и чтобы всё всегда компилировалось с первого раза 💜
+        </p>
+        <button class="btn" data-next="s6">Дальше →</button>
+      </div>
+    </section>
+
+  <!-- Экран 6: Подарок -->
+  <section class="screen" id="s6">
     <h1>Твой подарок 🎁</h1>
     <div class="gift" id="gift">🎁</div>
     <p id="giftText" class="gift-text hidden">
-      Ты — лучший! Пусть сбудется всё, о чём мечтаешь.<br>
-      Спасибо, что ты есть 💚
+      Ибо так возлюбил Бог тебя, что отдал Сына Своего Единородного, чтобы <br>
+      уверовала, не погибла, но имела жизнь вечную 3:16
     </p>
     <button class="btn hidden" id="restartBtn">Пройти заново 🔄</button>
   </section>
 
   <script src="script.js"></script>
-  <script src="pyodide-runner.js"></script>
 </body>
 </html>

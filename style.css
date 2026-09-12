@@ -1,22 +1,58 @@
-/* ===== Сброс и база ===== */
+/* ===== Сброс ===== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Courier New', monospace;
+}
+
+/* ===== Фон (градиент привязан к html — не обрезается) ===== */
+html {
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(155, 89, 255, .35) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 85%, rgba(200, 100, 255, .28) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 50%, #1a0b2e 0%, #0a0416 75%);
+  background-attachment: fixed;
+  background-size: cover;
+  min-height: 100%;
 }
 
 body {
-  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-  color: #eee;
+  background: transparent;
+  color: #e6d5ff;
   min-height: 100vh;
   overflow-x: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Courier New', monospace;
+  position: relative;
+  outline: none;
 }
 
-/* ===== Экраны и переходы ===== */
+/* Звёзды — статичные, летят вместе с экраном */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+    radial-gradient(1px 1px at 40px 70px, #d8b4fe, transparent),
+    radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+    radial-gradient(2px 2px at 130px 80px, #c084fc, transparent),
+    radial-gradient(1px 1px at 160px 120px, #fff, transparent),
+    radial-gradient(1px 1px at 200px 60px, #e9d5ff, transparent),
+    radial-gradient(2px 2px at 250px 150px, #fff, transparent),
+    radial-gradient(1px 1px at 300px 30px, #d8b4fe, transparent),
+    radial-gradient(1px 1px at 350px 100px, #fff, transparent),
+    radial-gradient(2px 2px at 400px 180px, #c084fc, transparent);
+  background-size: 450px 200px;
+  background-repeat: repeat;
+  opacity: .75;
+}
+
+/* ===== Экраны ===== */
 .screen {
   position: absolute;
   width: 100%;
@@ -31,8 +67,8 @@ body {
   opacity: 0;
   pointer-events: none;
   transform: translateY(20px);
-  transition: opacity .8s ease, transform .8s ease;
-  overflow-y: auto;
+  transition: opacity .5s ease, transform .5s ease;
+  z-index: 1;
 }
 
 .screen.active {
@@ -44,235 +80,354 @@ body {
 /* ===== Заголовки ===== */
 h1 {
   font-size: 2.5rem;
-  color: #7CFC00;
-  text-shadow: 0 0 20px #7CFC00;
+  color: #c084fc;
+  text-shadow: 0 0 20px rgba(192, 132, 252, .8);
+}
+
+h3 {
+  color: #c084fc;
+  margin-top: 14px;
+  margin-bottom: 6px;
+  font-size: 1rem;
+}
+
+p {
+  color: #e6d5ff;
 }
 
 .wish {
   font-size: 1.2rem;
   max-width: 600px;
   line-height: 1.6;
+  color: #e6d5ff;
 }
 
 /* ===== Кнопки ===== */
 .btn {
-  background: #7CFC00;
-  color: #000;
+  background: linear-gradient(135deg, #a855f7, #d946ef);
+  color: #fff;
   border: none;
   padding: 12px 28px;
   border-radius: 30px;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: transform .3s, box-shadow .3s, background .3s;
+  font-family: 'Courier New', monospace;
+  transition: transform .25s;
+  box-shadow: 0 0 20px rgba(168, 85, 247, .4);
 }
 
-.btn:hover:not(:disabled) {
-  transform: scale(1.08);
-  box-shadow: 0 0 25px #7CFC00;
-}
-
-.btn:disabled {
-  opacity: .4;
-  cursor: not-allowed;
-}
-
-.btn.secondary {
-  background: transparent;
-  color: #7CFC00;
-  border: 2px solid #7CFC00;
-}
-
-.btn.secondary:hover:not(:disabled) {
-  background: #7CFC00;
-  color: #000;
+.btn:hover {
+  transform: scale(1.06);
 }
 
 /* ===== Карточка задачи ===== */
 .task-card {
-  background: #111;
-  border: 1px solid #333;
+  background: rgba(30, 15, 50, .85);
+  border: 1px solid rgba(192, 132, 252, .4);
   border-radius: 12px;
   padding: 20px;
   max-width: 700px;
   width: 100%;
   text-align: left;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 .task-card h2 {
-  color: #7CFC00;
-  margin-bottom: 10px;
-  font-size: 1.1rem;
+  color: #c084fc;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+}
+
+.task-card ul,
+.task-card ol {
+  padding-left: 22px;
+  margin: 8px 0;
+}
+
+.task-card li {
+  margin-bottom: 6px;
+  color: #e6d5ff;
 }
 
 .task-card code {
-  background: #000;
-  color: #7CFC00;
-  padding: 2px 6px;
+  background: rgba(0, 0, 0, .5);
+  color: #d8b4fe;
+  padding: 2px 8px;
   border-radius: 4px;
   font-size: .95rem;
 }
 
-.expected {
-  background: #000;
-  border-left: 3px solid #7CFC00;
-  padding: 10px 14px;
-  margin: 10px 0;
-  color: #7CFC00;
+.code-block {
+  background: rgba(0, 0, 0, .55);
+  border-left: 3px solid #c084fc;
+  padding: 12px 16px;
+  margin: 8px 0;
+  color: #d8b4fe;
   border-radius: 4px;
   white-space: pre-wrap;
+  font-family: 'Courier New', monospace;
   font-size: .95rem;
 }
 
-/* ===== Редактор ===== */
-.editor-wrap {
-  max-width: 700px;
-  width: 100%;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid #333;
-}
-
-.editor-header {
-  background: #1a1a1a;
-  padding: 8px 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border-bottom: 1px solid #333;
-}
-
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-.dot.red    { background: #ff5f56; }
-.dot.yellow { background: #ffbd2e; }
-.dot.green  { background: #27c93f; }
-
-.filename {
-  color: #888;
-  font-size: .85rem;
-  margin-left: 10px;
-}
-
-#code {
-  width: 100%;
-  min-height: 200px;
-  background: #0d0d0d;
-  color: #7CFC00;
-  border: none;
-  padding: 15px;
-  font-family: 'Courier New', monospace;
-  font-size: 1rem;
-  resize: vertical;
-  outline: none;
+.note {
+  background: rgba(192, 132, 252, .12);
+  border: 1px dashed #c084fc;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-top: 16px;
+  font-size: .9rem;
+  color: #e6d5ff;
   line-height: 1.5;
-  tab-size: 4;
 }
 
-/* ===== Кнопки управления ===== */
-.controls {
+.note b {
+  color: #d8b4fe;
+}
+
+/* ===== Ответ ===== */
+.answer-wrap {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
   justify-content: center;
-}
-
-/* ===== Вывод ===== */
-.output-wrap {
   max-width: 700px;
   width: 100%;
-  text-align: left;
 }
 
-.output-label {
-  color: #888;
-  font-size: .85rem;
-  margin-bottom: 6px;
-}
-
-.output {
-  background: #000;
-  border: 1px solid #333;
-  border-radius: 8px;
-  padding: 12px 15px;
-  min-height: 60px;
-  color: #7CFC00;
-  white-space: pre-wrap;
-  font-size: .95rem;
+#answer {
+  background: rgba(20, 10, 40, .8);
+  border: 2px solid #c084fc;
+  color: #e6d5ff;
+  padding: 12px 16px;
+  border-radius: 30px;
+  font-size: 1rem;
   font-family: 'Courier New', monospace;
+  outline: none;
+  flex: 1;
+  min-width: 220px;
+  text-align: center;
+}
+
+#answer:focus {
+  box-shadow: 0 0 20px rgba(192, 132, 252, .6);
+}
+
+#answer::placeholder {
+  color: #a78bca;
 }
 
 .hint {
-  margin-top: 10px;
-  min-height: 20px;
-  font-size: .95rem;
+  min-height: 24px;
+  font-size: 1rem;
   white-space: pre-wrap;
+  max-width: 700px;
+  color: #e6d5ff;
 }
 
-.loading {
-  color: #ffbd2e;
+/* ===== Опрос ===== */
+.quiz-progress {
+  width: 100%;
+  max-width: 600px;
+  height: 10px;
+  background: rgba(20, 10, 40, .8);
+  border: 1px solid rgba(192, 132, 252, .4);
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.quiz-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #a855f7, #d946ef);
+  transition: width .35s ease;
+  border-radius: 30px;
+}
+
+.quiz-counter {
+  color: #a78bca;
   font-size: .9rem;
 }
 
-.loading.done { display: none; }
+.quiz-card {
+  background: rgba(30, 15, 50, .85);
+  border: 1px solid rgba(192, 132, 252, .4);
+  border-radius: 12px;
+  padding: 24px 20px;
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
+}
 
-/* ===== Опрос ===== */
-.options {
+.quiz-question {
+  color: #d8b4fe;
+  font-size: 1.15rem;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.quiz-options {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  max-width: 400px;
-  width: 100%;
+  gap: 10px;
 }
 
-.option {
-  background: #111;
-  border: 1px solid #7CFC00;
-  color: #7CFC00;
-  padding: 14px;
+.quiz-option {
+  background: rgba(15, 5, 30, .7);
+  border: 1px solid rgba(192, 132, 252, .4);
+  color: #e6d5ff;
+  padding: 14px 18px;
   border-radius: 10px;
   cursor: pointer;
-  font-size: 1rem;
-  transition: background .3s, color .3s;
   font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  text-align: left;
+  transition: background .2s, transform .15s;
 }
 
-.option:hover {
-  background: #7CFC00;
-  color: #000;
+.quiz-option:hover {
+  background: linear-gradient(135deg, #a855f7, #d946ef);
+  color: #fff;
+  transform: translateX(4px);
 }
 
-.vote-result {
-  color: #7CFC00;
-  font-size: 1.1rem;
+.quiz-result {
+  text-align: center;
+}
+
+.quiz-result-emoji {
+  font-size: 5rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.quiz-result-title {
+  color: #d8b4fe;
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+}
+
+.quiz-result-text {
+  color: #e6d5ff;
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+
+/* ===== Лабиринт ===== */
+.game-hint {
+  color: #c084fc;
+  font-size: .95rem;
+}
+
+.game-hint b {
+  color: #d8b4fe;
+}
+
+.maze-wrap {
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(20, 10, 40, .7);
+  border: 2px solid rgba(192, 132, 252, .5);
+}
+
+.maze {
+  display: grid;
+  --cell: 38px;
+  grid-template-columns: repeat(11, var(--cell));
+  grid-template-rows: repeat(11, var(--cell));
+  gap: 2px;
+}
+
+.cell {
+  width: var(--cell);
+  height: var(--cell);
+  border-radius: 4px;
+  background: rgba(40, 20, 70, .5);
+}
+
+.cell.wall {
+  background: linear-gradient(135deg, #6b21a8, #4c1d95);
+}
+
+.cell.player {
+  background-image: url('персонаж.jpg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(216, 70, 239, .8);
+}
+
+.cell.gift {
+  background: radial-gradient(circle, #fde047 0%, #eab308 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--cell) * 0.7);
+  line-height: 1;
+}
+
+.cell.gift::before {
+  content: '🎁';
+}
+
+.game-msg {
+  color: #d8b4fe;
+  font-size: 1.05rem;
   min-height: 30px;
+}
+
+/* ===== D-pad ===== */
+.dpad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.dpad-row {
+  display: flex;
+  gap: 6px;
+}
+
+.dpad-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  border: 1px solid rgba(192, 132, 252, .6);
+  background: rgba(30, 15, 50, .9);
+  color: #d8b4fe;
+  font-size: 1.3rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.dpad-btn:active {
+  background: linear-gradient(135deg, #a855f7, #d946ef);
+  color: #fff;
+}
+
+@media (min-width: 800px) {
+  .dpad { display: none; }
 }
 
 /* ===== Подарок ===== */
 .gift {
   font-size: 8rem;
   cursor: pointer;
-  transition: transform .5s;
-  animation: float 2s ease-in-out infinite;
+  transition: transform .4s;
   user-select: none;
 }
 
 .gift.open {
   transform: scale(1.3) rotate(10deg);
-  animation: none;
-}
-
-@keyframes float {
-  50% { transform: translateY(-15px); }
 }
 
 .gift-text {
   font-size: 1.2rem;
-  color: #7CFC00;
+  color: #d8b4fe;
   max-width: 500px;
   line-height: 1.6;
 }
@@ -280,25 +435,73 @@ h1 {
 /* ===== Утилиты ===== */
 .hidden { display: none; }
 
-/* ===== Печатающийся текст ===== */
-.typing {
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 3px solid #7CFC00;
-  animation: blink .7s step-end infinite;
-  max-width: 100%;
-}
-
-@keyframes blink {
-  50% { border-color: transparent; }
-}
-
 /* ===== Адаптив ===== */
 @media (max-width: 600px) {
   h1 { font-size: 1.8rem; }
   .wish { font-size: 1rem; }
   .gift { font-size: 5rem; }
   .task-card { padding: 15px; }
-  #code { font-size: .9rem; min-height: 160px; }
+  .code-block { font-size: .85rem; }
+  .maze { --cell: 26px; }
+}
+
+/* ===== Фон поздравления на весь экран ===== */
+#s5 {
+  padding: 0;
+  overflow: hidden;               /* ← НЕТ СКРОЛЛА */
+  height: 100vh;                  /* ← ровно высота экрана */
+}
+
+.congrats-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('картинка_2.jpg');
+  background-size: 100% 100%;        /* ← растянуть по ширине и высоте */
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+/* Затемнение для читаемости текста */
+.congrats-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 4, 22, .45);
+}
+
+.congrats-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 30px 20px;
+  text-align: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Затемнение, чтобы текст читался поверх фото */
+.congrats-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 4, 22, .55); /* чёрно-фиолетовое затемнение */
+}
+
+.congrats-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 30px 20px;
+  text-align: center;
+  width: 100%;
+  min-height: 100vh;
 }
