@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎁 Тайная комната</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
+</head>
+<body>
+
+  <!-- Экран 1: Приветствие -->
+  <section class="screen active" id="s1">
+    <h1>🌌 Тайная комната</h1>
+    <p>Ты нашёл секретную ссылку...</p>
+    <p>Чтобы войти — докажи, что умеешь думать как питонист 🐍</p>
+    <button class="btn" data-next="s2">Открыть дверь →</button>
+  </section>
+
+  <!-- Экран 2: Задача с редактором -->
+  <section class="screen" id="s2">
+    <h1>🐍 Задача стража</h1>
+
+    <div class="task-card">
+      <h2>Условие</h2>
+      <p>
+        Напиши функцию <code>happy_birthday(name)</code>, которая возвращает строку:
+      </p>
+      <pre class="expected">🎂 С днём рождения, &lt;имя&gt;! 🎉</pre>
+      <p>
+        Затем вызови её с именем <b>"Аня"</b> и выведи результат через <code>print()</code>.
+      </p>
+    </div>
+
+    <div class="editor-wrap">
+      <div class="editor-header">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+        <span class="filename">solution.py</span>
+      </div>
+      <textarea id="code" spellcheck="false">def happy_birthday(name):
+    # твой код здесь
+    pass
+
+print(happy_birthday("Аня"))
+</textarea>
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="runBtn" disabled>▶ Запустить</button>
+      <button class="btn secondary" id="checkBtn" disabled>✅ Проверить</button>
+    </div>
+
+    <div class="output-wrap">
+      <div class="output-label">Вывод:</div>
+      <pre id="output" class="output"></pre>
+      <p id="hint" class="hint"></p>
+    </div>
+
+    <p id="loading" class="loading">Загружаю Python... ⏳</p>
+  </section>
+
+  <!-- Экран 3: Поздравление -->
+  <section class="screen" id="s3">
+    <h1 class="typing">🎉 С Днём Рождения! 🎉</h1>
+    <p class="wish">
+      Пусть каждый день будет как хороший код —<br>
+      чистый, работающий и без багов!<br><br>
+      Желаю море вдохновения, крутых проектов<br>
+      и чтобы всё всегда компилировалось с первого раза 💚
+    </p>
+    <button class="btn" data-next="s4">Дальше →</button>
+  </section>
+
+  <!-- Экран 4: Опрос -->
+  <section class="screen" id="s4">
+    <h1>А какой ты именинник?</h1>
+    <div class="options">
+      <button class="option" data-vote="🦥">🦥 Ленивый — отпраздную лёжа</button>
+      <button class="option" data-vote="🚀">🚀 Энергичный — вечеринка до утра</button>
+      <button class="option" data-vote="🧠">🧠 Мудрый — главное спокойствие</button>
+      <button class="option" data-vote="🍕">🍕 Голодный — где торт?</button>
+    </div>
+    <p id="voteResult" class="vote-result"></p>
+  </section>
+
+  <!-- Экран 5: Подарок -->
+  <section class="screen" id="s5">
+    <h1>Твой подарок 🎁</h1>
+    <div class="gift" id="gift">🎁</div>
+    <p id="giftText" class="gift-text hidden">
+      Ты — лучший! Пусть сбудется всё, о чём мечтаешь.<br>
+      Спасибо, что ты есть 💚
+    </p>
+    <button class="btn hidden" id="restartBtn">Пройти заново 🔄</button>
+  </section>
+
+  <script src="script.js"></script>
+  <script src="pyodide-runner.js"></script>
+</body>
+</html>

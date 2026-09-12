@@ -1,0 +1,304 @@
+/* ===== Сброс и база ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Courier New', monospace;
+}
+
+body {
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  color: #eee;
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== Экраны и переходы ===== */
+.screen {
+  position: absolute;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 30px 20px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: opacity .8s ease, transform .8s ease;
+  overflow-y: auto;
+}
+
+.screen.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* ===== Заголовки ===== */
+h1 {
+  font-size: 2.5rem;
+  color: #7CFC00;
+  text-shadow: 0 0 20px #7CFC00;
+}
+
+.wish {
+  font-size: 1.2rem;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+/* ===== Кнопки ===== */
+.btn {
+  background: #7CFC00;
+  color: #000;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform .3s, box-shadow .3s, background .3s;
+}
+
+.btn:hover:not(:disabled) {
+  transform: scale(1.08);
+  box-shadow: 0 0 25px #7CFC00;
+}
+
+.btn:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+.btn.secondary {
+  background: transparent;
+  color: #7CFC00;
+  border: 2px solid #7CFC00;
+}
+
+.btn.secondary:hover:not(:disabled) {
+  background: #7CFC00;
+  color: #000;
+}
+
+/* ===== Карточка задачи ===== */
+.task-card {
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 700px;
+  width: 100%;
+  text-align: left;
+  line-height: 1.6;
+}
+
+.task-card h2 {
+  color: #7CFC00;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.task-card code {
+  background: #000;
+  color: #7CFC00;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: .95rem;
+}
+
+.expected {
+  background: #000;
+  border-left: 3px solid #7CFC00;
+  padding: 10px 14px;
+  margin: 10px 0;
+  color: #7CFC00;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  font-size: .95rem;
+}
+
+/* ===== Редактор ===== */
+.editor-wrap {
+  max-width: 700px;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #333;
+}
+
+.editor-header {
+  background: #1a1a1a;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #333;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.dot.red    { background: #ff5f56; }
+.dot.yellow { background: #ffbd2e; }
+.dot.green  { background: #27c93f; }
+
+.filename {
+  color: #888;
+  font-size: .85rem;
+  margin-left: 10px;
+}
+
+#code {
+  width: 100%;
+  min-height: 200px;
+  background: #0d0d0d;
+  color: #7CFC00;
+  border: none;
+  padding: 15px;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  resize: vertical;
+  outline: none;
+  line-height: 1.5;
+  tab-size: 4;
+}
+
+/* ===== Кнопки управления ===== */
+.controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ===== Вывод ===== */
+.output-wrap {
+  max-width: 700px;
+  width: 100%;
+  text-align: left;
+}
+
+.output-label {
+  color: #888;
+  font-size: .85rem;
+  margin-bottom: 6px;
+}
+
+.output {
+  background: #000;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 12px 15px;
+  min-height: 60px;
+  color: #7CFC00;
+  white-space: pre-wrap;
+  font-size: .95rem;
+  font-family: 'Courier New', monospace;
+}
+
+.hint {
+  margin-top: 10px;
+  min-height: 20px;
+  font-size: .95rem;
+  white-space: pre-wrap;
+}
+
+.loading {
+  color: #ffbd2e;
+  font-size: .9rem;
+}
+
+.loading.done { display: none; }
+
+/* ===== Опрос ===== */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.option {
+  background: #111;
+  border: 1px solid #7CFC00;
+  color: #7CFC00;
+  padding: 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background .3s, color .3s;
+  font-family: 'Courier New', monospace;
+}
+
+.option:hover {
+  background: #7CFC00;
+  color: #000;
+}
+
+.vote-result {
+  color: #7CFC00;
+  font-size: 1.1rem;
+  min-height: 30px;
+}
+
+/* ===== Подарок ===== */
+.gift {
+  font-size: 8rem;
+  cursor: pointer;
+  transition: transform .5s;
+  animation: float 2s ease-in-out infinite;
+  user-select: none;
+}
+
+.gift.open {
+  transform: scale(1.3) rotate(10deg);
+  animation: none;
+}
+
+@keyframes float {
+  50% { transform: translateY(-15px); }
+}
+
+.gift-text {
+  font-size: 1.2rem;
+  color: #7CFC00;
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+/* ===== Утилиты ===== */
+.hidden { display: none; }
+
+/* ===== Печатающийся текст ===== */
+.typing {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #7CFC00;
+  animation: blink .7s step-end infinite;
+  max-width: 100%;
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+/* ===== Адаптив ===== */
+@media (max-width: 600px) {
+  h1 { font-size: 1.8rem; }
+  .wish { font-size: 1rem; }
+  .gift { font-size: 5rem; }
+  .task-card { padding: 15px; }
+  #code { font-size: .9rem; min-height: 160px; }
+}
